@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
 
-import axiosInstance from "../../Helpers/axiosInstance"
+import axiosInstance from "../../Helpers/axiosInstance";
+const storedData = localStorage.getItem('data');
 const initialState = {
-    isLoggedIn: localStorage.getItem('isLoggedIn') || false,
+    isLoggedIn: localStorage.getItem('isLoggedIn') === 'true', // Parse as boolean
     role: localStorage.getItem('role') || "",
-    data: localStorage.getItem('data') != undefined ? JSON.parse(localStorage.getItem('data')) : {}
+    data: storedData && storedData !== "undefined" ? JSON.parse(storedData) : {}
 };
 
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
@@ -24,18 +25,21 @@ export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
     }
 })
 
-export const login = createAsyncThunk("/auth/login", async (data) => {
-    try {
-        const res = axiosInstance.post("user/login", data);
-        toast.promise(res, {
-            loading: "Wait! authentication in progress...",
-            success: (data) => {
+
+export const login = createAsyncThunk("/auth/login" , async(data)=>{
+    try{
+        const res = axiosInstance.post("user/login" , data);
+        toast.promise(res,{
+            loading : "Wait ! authentication is in progress",
+            success : (data) =>{
                 return data?.data?.message;
             },
-            error: "Failed to log in"
+
+            error : "Failed to login"
         });
+
         return (await res).data;
-    } catch(error) {
+    }catch(error){
         toast.error(error?.response?.data?.message);
     }
 });

@@ -41,7 +41,7 @@ function Signup() {
                 ...signupData,
                 avatar: uploadedImage
             });
-            const fileReader = new FileReader();
+            const fileReader = new FileReader(); //use to fetch image from users computer
             fileReader.readAsDataURL(uploadedImage);
             fileReader.addEventListener("load", function () {
                 setPreviewImage(this.result);
