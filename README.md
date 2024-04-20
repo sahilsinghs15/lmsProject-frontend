@@ -5,7 +5,7 @@
 1. Clone the project
 
 ```
-    git clone https://github.com/singhsanket143/lms-frontend-hn.git
+    git clone https://github.com/sahilsinghs15/lmsProject-frontend.git
 ```
 
 2. Move into the directory
